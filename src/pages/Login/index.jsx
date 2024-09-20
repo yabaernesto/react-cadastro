@@ -1,19 +1,26 @@
-import { useRef } from "react";
-import { Link } from "react-router-dom";
-import api from "../../services/api";
+import { useRef } from 'react'
+import { Link } from 'react-router-dom'
+import api from '../../services/api'
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
   const emailRef = useRef()
   const passwordRef = useRef()
 
-  const handleSubmit = async (event) => {
+  const navigate = useNavigate()
+
+  const handleSubmit = async event => {
     event.preventDefault()
-    
+
     try {
-      await api.post('/login', {
+      const { data: token } = await api.post('/login', {
         email: emailRef.current.value,
         password: passwordRef.current.value,
       })
+
+      localStorage.setItem('token', token)
+
+      navigate('/listar-usuarios')
 
       console.log('Usuario logado com sucesso!')
     } catch (error) {
@@ -28,28 +35,31 @@ function Login() {
       </h2>
 
       <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
-        <input 
+        <input
           type="email"
           ref={emailRef}
-          placeholder="e-mail" 
+          placeholder="e-mail"
           className="w-full px-3 py-2 border border-x-gray-300 rounded-md focus:outline-none"
         />
-        <input 
+        <input
           type="password"
           ref={passwordRef}
-          placeholder="Senha" 
+          placeholder="Senha"
           className="w-full px-3 py-2 border border-x-gray-300 rounded-md focus:outline-none"
         />
-        <button 
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-400 ease-in duration-100">
-          Cadastrar-se
+        {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
+        <button className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-400 ease-in duration-100">
+          Login
         </button>
       </form>
-      <Link to="/" className="text-blue-700 hover:underline mt-4 block text-center">
+      <Link
+        to="/"
+        className="text-blue-700 hover:underline mt-4 block text-center"
+      >
         Nao tem uma conta ? Cadastre-se
       </Link>
     </div>
   )
 }
 
-export default Login;
+export default Login

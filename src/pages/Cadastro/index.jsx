@@ -1,15 +1,15 @@
-import { useRef } from "react";
-import { Link } from "react-router-dom";
-import api from "../../services/api";
+import { useRef } from 'react'
+import { Link } from 'react-router-dom'
+import api from '../../services/api'
 
 function Cadastro() {
   const nameRef = useRef()
   const emailRef = useRef()
   const passwordRef = useRef()
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async event => {
     event.preventDefault()
-    
+
     try {
       await api.post('/cadastro', {
         name: nameRef.current.value,
@@ -30,34 +30,37 @@ function Cadastro() {
       </h2>
 
       <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
-        <input 
+        <input
           type="text"
           ref={nameRef}
-          placeholder="Nome" 
+          placeholder="Nome"
           className="w-full px-3 py-2 border border-x-gray-300 rounded-md focus:outline-none"
         />
-        <input 
+        <input
           type="email"
           ref={emailRef}
-          placeholder="e-mail" 
+          placeholder="e-mail"
           className="w-full px-3 py-2 border border-x-gray-300 rounded-md focus:outline-none"
         />
-        <input 
+        <input
           type="password"
           ref={passwordRef}
-          placeholder="Senha" 
+          placeholder="Senha"
           className="w-full px-3 py-2 border border-x-gray-300 rounded-md focus:outline-none"
         />
-        <button 
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-400 ease-in duration-100">
+        {/* biome-ignore lint/a11y/useButtonType: <explanation> */}
+        <button className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-400 ease-in duration-100">
           Cadastrar-se
         </button>
       </form>
-      <Link to="/login" className="text-blue-700 hover:underline mt-4 block text-center">
+      <Link
+        to="/login"
+        className="text-blue-700 hover:underline mt-4 block text-center"
+      >
         Ja tem uma conta? Faca login
       </Link>
     </div>
   )
 }
 
-export default Cadastro;
+export default Cadastro
